@@ -8,20 +8,25 @@ Playing around with Apache Kafka using .NET and Docker
 ## Basic steps to config the local Kafka cluster
 
 - Pull Zookeeper image
+
 docker pull confluentinc/cp-zookeeper
 
 - Pull Kafka image
+
 docker pull confluentinc/cp-kafka
 
 - Create a network for Kafka and Zookeeper
+
 docker network create kafka
 
 - Configure and run Zookeeper
+
 docker run -d --network=kafka --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 -p 2181:2181 confluentinc/cp-zookeeper
 
 docker logs zookeeper
 
 - Configure and run Kafka
+
 docker run -d --network=kafka --name=kafka -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 confluentinc/cp-kafka
 
 docker logs kafka
@@ -52,7 +57,10 @@ to bring visibility to the management of Kafka clusters, applications, and micro
 
 --> Used CONDUKTOR to connect to my local Kafka cluster and create a Topic named "demoAJ"
 
+## Projects
 
+- `KafkaProducer` -> Console app to delivery messages to a Kafka topic named 'demoAJ'
+- `KafkaConsumer` -> HostedService that consumes messages delivered to a Kafka topic named 'demoAJ'
 
 
 
